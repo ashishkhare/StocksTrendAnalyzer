@@ -1,11 +1,11 @@
 CREATE TABLE User
 (
-  UserID    int AUTO_INCREMENT,
-  FirstName varchar(100),
-  LastName  varchar(100),
-  Address   varchar(255),
-  City      varchar(50),
-  EmailID   varchar(255),
-  CellPhone varchar(15),
-  PRIMARY KEY (UserID)
+  user_id    int AUTO_INCREMENT,
+  first_name varchar(255),
+  last_name  varchar(255),
+  address   varchar(255),
+  city      varchar(255),
+  email_id   varchar(255),
+  cell_phone varchar(255),
+  PRIMARY KEY (user_id)
 );

@@ -2,9 +2,12 @@ package com.aksoft.equities.service;
 
 import com.aksoft.equities.entity.User;
 import com.aksoft.equities.repository.UserRepository;
+import com.aksoft.equities.util.CSVHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -46,6 +49,15 @@ public class UserService {
         oldUser.setEmailId(user.getEmailId());
         oldUser.setCity(user.getCity());
         return saveUser(oldUser);
+    }
+
+    public void save(MultipartFile file) {
+        try {
+            List<User> users = CSVHelper.csvToUsers(file.getInputStream());
+            saveUsers(users);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store csv data: " + e.getMessage());
+        }
     }
 
 }
