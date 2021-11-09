@@ -1,7 +1,7 @@
 package com.aksoft.equities.controller;
 
-import com.aksoft.equities.entity.User;
-import com.aksoft.equities.service.UserService;
+import com.aksoft.equities.entity.StockInfo;
+import com.aksoft.equities.service.StockInfoService;
 import com.aksoft.equities.util.CSVHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,51 +13,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/")
-public class UserController {
+public class StockInfoController {
     @Autowired
-    private UserService service;
+    private StockInfoService stockInfoService;
 
-    @PostMapping("/addUser")
-    public User addUser(@RequestBody User user) {
-        return service.saveUser(user);
+    @PostMapping("/addStockInfo")
+    public StockInfo addUser(@RequestBody StockInfo user) {
+        return stockInfoService.saveStockInfo(user);
     }
 
-    @PostMapping("/addUsers")
-    public List<User> addUsers(@RequestBody List<User> users) {
-        return service.saveUsers(users);
+    @PostMapping("/addStockInfoList")
+    public List<StockInfo> addStockInfoList(@RequestBody List<StockInfo> users) {
+        return stockInfoService.saveStockInfoList(users);
     }
 
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return service.getUsers();
+    @GetMapping("/stockInfoList")
+    public List<StockInfo> getStockInfoList() {
+        return stockInfoService.getAllStockInfo();
     }
 
-    @GetMapping("/users/{id}")
-    public User findUserById(@PathVariable int id) {
-        return service.getUserById(id);
+    @GetMapping("/stockinfoByIsin/{isin}")
+    public List<StockInfo> findStockInfoByIsin(@PathVariable String isin) {
+        return stockInfoService.getStockInfoByIsin(isin);
     }
 
-    @GetMapping("/userByCellphone/{cellPhone}")
-    public User findUserByCellPhone(@PathVariable String cellPhone) {
-        return service.getUserByCellphone(cellPhone);
+    @GetMapping("/stockinfoBySymbol/{symbol}")
+    public List<StockInfo> findStockInfoBySymbol(@PathVariable String symbol) {
+        return stockInfoService.getStockInfoBySymbol(symbol);
     }
 
-    @PutMapping("/update")
-    public User updateUser(@RequestBody User user) {
-        return service.updateUser(user);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable int id) {
-        return service.deleteUser(id);
-    }
-
-    @PostMapping("/upload/users")
+    @PostMapping("/upload/stocks")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         String message;
         if (CSVHelper.isCSVFormat(file)) {
             try {
-                service.save(file);
+                stockInfoService.save(file);
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();
                 return ResponseEntity.status(HttpStatus.OK).body(message);
             } catch (Exception e) {
