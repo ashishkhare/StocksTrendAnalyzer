@@ -2,7 +2,7 @@ package com.aksoft.equities.service;
 
 import com.aksoft.equities.entity.StockInfo;
 import com.aksoft.equities.repository.StockInfoRepository;
-import com.aksoft.equities.util.CSVHelper;
+import com.aksoft.equities.util.CSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +25,7 @@ public class StockInfoService {
         return repository.findAll();
     }
     public List<StockInfo> getStockInfoBySymbol(String symbol){
-        return repository.findBySymbol(symbol);
+        return repository.findByName(symbol);
     }
     public List<StockInfo> getStockInfoByIsin(String isin){
         return repository.findByIsin(isin);
@@ -33,7 +33,7 @@ public class StockInfoService {
 
     public void save(MultipartFile file) {
         try {
-            List<StockInfo> stockInfoList = CSVHelper.csvToStockInfoList(file.getInputStream());
+            List<StockInfo> stockInfoList = CSVUtil.csvToStockInfoList(file.getInputStream());
             saveStockInfoList(stockInfoList);
         } catch (IOException e) {
             throw new RuntimeException("Failed to store csv data: " + e.getMessage());

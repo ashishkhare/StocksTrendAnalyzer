@@ -2,7 +2,7 @@ package com.aksoft.equities.controller;
 
 import com.aksoft.equities.entity.User;
 import com.aksoft.equities.service.UserService;
-import com.aksoft.equities.util.CSVHelper;
+import com.aksoft.equities.util.CSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +55,7 @@ public class UserController {
     @PostMapping("/upload/users")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         String message;
-        if (CSVHelper.isCSVFormat(file)) {
+        if (CSVUtil.isCSVFormat(file)) {
             try {
                 service.save(file);
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();

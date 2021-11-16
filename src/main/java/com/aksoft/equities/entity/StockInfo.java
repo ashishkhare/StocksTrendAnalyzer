@@ -1,5 +1,6 @@
 package com.aksoft.equities.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,29 +15,29 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "STOCK_INFO")
+//"Date", "Open", "High", "Low", "Close", "Adj Close", "Volume", "Name", "ISIN"
 public class StockInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="stock_row_id")
+    @JsonIgnore
     private int stockRowId;
-    @Column(name="symbol")
-    private String symbol;
-    @Column(name="isin")
-    private String isin;
+    @Column(name="last_trade_date")
+    private Date date;
     @Column(name="open_price")
-    private BigDecimal openPrice;
+    private BigDecimal open;
     @Column(name="high_price")
-    private BigDecimal highPrice;
+    private BigDecimal high;
     @Column(name="low_price")
-    private BigDecimal lowPrice;
+    private BigDecimal low;
     @Column(name="close_price")
-    private BigDecimal closePrice;
+    private BigDecimal close;
     @Column(name="adj_close_price")
-    private BigDecimal adjClosePrice;
+    private BigDecimal adjClose;
     @Column(name="volume")
     private BigInteger volume;
-    @Column(name="last_trade_date")
-    private Date lastTradeDate;
-
-
+    @Column(name="symbol")
+    private String name;
+    @Column(name="isin")
+    private String isin;
 }
