@@ -15,10 +15,13 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "STOCK_INFO")
-//"Date", "Open", "High", "Low", "Close", "Adj Close", "Volume", "Name", "ISIN"
 public class StockInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableGenerator(name = "addition_type_id_seq", allocationSize = 1, table = "ADDITION_TYPE_SEQUENCES",
+            pkColumnName = "SEQ_NAME",
+            valueColumnName = "SEQ_NUMBER",
+            pkColumnValue = "SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "addition_type_id_seq")
     @Column(name="stock_row_id")
     @JsonIgnore
     private int stockRowId;
